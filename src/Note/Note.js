@@ -23,6 +23,7 @@ function noteDelete(noteId, callback) {
   })
   .then(data => {
     callback(noteId)
+    this.props.history.push('/')
   })
   .catch(error => {
     console.error(error)
@@ -43,7 +44,7 @@ export default function Note(props) {
       className='Note__delete'
       type='button'
       onClick={() => {
-        noteDelete(
+       noteDelete(
           props.id,
           context.deleteNote)
       }}>
