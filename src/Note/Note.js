@@ -1,18 +1,50 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
+import NotesContext from '../NotesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 
+function noteDelete(noteId,callback) {
+  fetch(`http://localhost:9090/notes/${noteId}`,
+  {method: 'DELETE',
+  headers: { 'content-type':'application-json' }}
+  )
+  .then(res => {
+    if (!res.ok) {
+      return res.json().then(error => {
+        throw error
+      })
+    }
+    return res.json()
+  })
+  .then(data => {
+    callback(noteId)
+  })
+  .catch(error => {
+    console.error(error)
+  })
+}
+
 export default function Note(props) {
   return (
+    <NotesContext.Consumer>
+    {(context) => (
     <div className='Note'>
       <h2 className='Note__title'>
         <Link to={`/note/${props.id}`}>
           {props.name}
         </Link>
       </h2>
-      <button className='Note__delete' type='button'>
+      <button 
+      className='Note__delete'
+      type='button'
+      onClick={() => {
+        noteDelete(
+          props.id,
+          context.deleteNote)
+      }}>
+      
         <FontAwesomeIcon icon='trash-alt' />
         {' '}
         remove
@@ -27,5 +59,7 @@ export default function Note(props) {
         </div>
       </div>
     </div>
+    )}
+    </NotesContext.Consumer>
   )
 }

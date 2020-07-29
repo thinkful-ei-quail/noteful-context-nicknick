@@ -16,8 +16,8 @@ class App extends Component {
         folders: []
     };
 
-   
-    
+
+
 
     componentDidMount() {
         console.log('compDidMount ran');
@@ -29,7 +29,7 @@ class App extends Component {
                 folders: data
             }))
             .catch(err => console.log(err.message))
-        
+
         fetch('http://localhost:9090/notes')
             .then(res => res.json())
             .then(data => this.setState({
@@ -38,7 +38,14 @@ class App extends Component {
             .catch(err => console.log(err.message))
     }
 
-
+    deleteNote = noteId => {
+        const newNotes = this.state.notes.filter(note =>
+            note.id !== noteId
+        )
+        this.setState({
+            notes: newNotes
+        })
+    }
 
 
     renderNavRoutes() {
@@ -79,7 +86,7 @@ class App extends Component {
 
     renderMainRoutes() {
         console.log('renderMain ran');
-        const { notes, folders } = this.state;
+        const { notes } = this.state;
         return (
             <>
                 {['/', '/folder/:folderId'].map(path => (
@@ -117,20 +124,23 @@ class App extends Component {
     render() {
         console.log('render ran');
         return (
-            
+
             <div className="App">
-                <NotesContext.Provider value={{ notes: this.state.notes, folders: this.state.folders }}>
-                <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                <header className="App__header">
-                    <h1>
-                        <Link to="/">Noteful</Link>{' '}
-                        <FontAwesomeIcon icon="check-double" />
-                    </h1>
-                </header>
-                <main className="App__main">{this.renderMainRoutes()}</main>
+                <NotesContext.Provider value={
+                    {deleteNotes:this.deleteNotes, 
+                    notes: this.state.notes, 
+                    folders: this.state.folders }}>
+                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                    <header className="App__header">
+                        <h1>
+                            <Link to="/">Noteful</Link>{' '}
+                            <FontAwesomeIcon icon="check-double" />
+                        </h1>
+                    </header>
+                    <main className="App__main">{this.renderMainRoutes()}</main>
                 </NotesContext.Provider>
             </div>
-            
+
         );
     }
 }
