@@ -3,6 +3,7 @@ import Note from '../Note/Note'
 import './NotePageMain.css'
 
 export default function NotePageMain(props) {
+  // console.log(props.history);
   return (
     <section className='NotePageMain'>
       <Note

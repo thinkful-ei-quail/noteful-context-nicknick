@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import NoteListMain from '../NoteListMain/NoteListMain'
 import './Note.css'
 
-function noteDelete(noteId, callback) {
+function noteDelete(noteId, callback, history) {
   fetch(`http://localhost:9090/notes/${noteId}`, {
     method: 'DELETE',
     headers: { 
@@ -23,7 +23,7 @@ function noteDelete(noteId, callback) {
   })
   .then(data => {
     callback(noteId)
-    this.props.history.push('/')
+    history.push('/')
   })
   .catch(error => {
     console.error(error)
@@ -46,7 +46,8 @@ export default function Note(props) {
       onClick={() => {
        noteDelete(
           props.id,
-          context.deleteNote)
+          context.deleteNote,
+          props.history)
       }}>
       
         <FontAwesomeIcon icon='trash-alt' />
