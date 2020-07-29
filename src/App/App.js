@@ -45,6 +45,7 @@ class App extends Component {
         this.setState({
             notes: newNotes
         })
+        return (<Route path='/' component={NoteListMain} />)
     }
 
 
@@ -122,12 +123,12 @@ class App extends Component {
     }
 
     render() {
-        console.log('render ran');
+        // console.log(this.deleteNote);
         return (
 
             <div className="App">
                 <NotesContext.Provider value={
-                    {deleteNotes:this.deleteNotes, 
+                    {deleteNote: this.deleteNote, 
                     notes: this.state.notes, 
                     folders: this.state.folders }}>
                     <nav className="App__nav">{this.renderNavRoutes()}</nav>

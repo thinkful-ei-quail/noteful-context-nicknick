@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import NotesContext from '../NotesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import NoteListMain from '../NoteListMain/NoteListMain'
 import './Note.css'
 
-function noteDelete(noteId,callback) {
-  fetch(`http://localhost:9090/notes/${noteId}`,
-  {method: 'DELETE',
-  headers: { 'content-type':'application-json' }}
-  )
+function noteDelete(noteId, callback) {
+  fetch(`http://localhost:9090/notes/${noteId}`, {
+    method: 'DELETE',
+    headers: { 
+      'content-type':'application-json' 
+    }
+  })
   .then(res => {
     if (!res.ok) {
       return res.json().then(error => {
