@@ -45,7 +45,7 @@ class App extends Component {
         this.setState({
             notes: newNotes
         })
-        return (<Route path='/' component={NoteListMain} />)
+        // return (<Route path='/' component={NoteListMain} />)
     }
 
 
